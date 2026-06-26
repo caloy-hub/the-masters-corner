@@ -8,6 +8,7 @@ export default function Users() {
   const [teams, setTeams] = useState([])
   const [loading, setLoading] = useState(true)
   const [newTeamName, setNewTeamName] = useState('')
+  const [resetMessage, setResetMessage] = useState('')
 
   async function load() {
     const { data: u } = await supabase.from('profiles').select('*').order('full_name')
@@ -30,6 +31,14 @@ export default function Users() {
     await supabase.from('teams').insert({ name: newTeamName.trim() })
     setNewTeamName('')
     load()
+  }
+
+  async function sendResetLink(user) {
+    if (!user.email) { setResetMessage(`${user.full_name} has no email on file — ask them to sign in once so it's recorded.`); return }
+    const { error } = await supabase.auth.resetPasswordForEmail(user.email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    })
+    setResetMessage(error ? error.message : `Reset link sent to ${user.full_name} (${user.email}).`)
   }
 
   return (
@@ -73,9 +82,10 @@ export default function Users() {
 
       <div className="card">
         <div className="section-title">People</div>
+        {resetMessage && <p className="muted" style={{ marginBottom: 12 }}>{resetMessage}</p>}
         {loading ? <p className="muted">Loading…</p> : (
           <table>
-            <thead><tr><th>Name</th><th>Position</th><th>Role</th><th>Team</th><th>Active</th></tr></thead>
+            <thead><tr><th>Name</th><th>Position</th><th>Role</th><th>Team</th><th>Active</th><th></th></tr></thead>
             <tbody>
               {users.map((u) => (
                 <tr key={u.id}>
@@ -101,6 +111,7 @@ export default function Users() {
                   <td>
                     <input type="checkbox" checked={u.is_active} onChange={(e) => updateField(u.id, 'is_active', e.target.checked)} />
                   </td>
+                  <td><button className="btn btn-ghost" onClick={() => sendResetLink(u)}>Reset password</button></td>
                 </tr>
               ))}
             </tbody>

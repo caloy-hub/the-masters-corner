@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
+import { supabase } from '../lib/supabase.js'
 
 export default function Login() {
   const { signIn, signUp } = useAuth()
@@ -11,6 +12,7 @@ export default function Login() {
   const [fullName, setFullName] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
+  const [resetSent, setResetSent] = useState(false)
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -23,6 +25,18 @@ export default function Login() {
     if (err) setError(err.message)
     else if (mode === 'signin') navigate('/')
     else setError('Account created. An admin must assign your role before you can sign in.')
+  }
+
+  async function handleForgotPassword() {
+    setError('')
+    if (!email) { setError('Enter your email above first, then click "Forgot password?" again.'); return }
+    setBusy(true)
+    const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    })
+    setBusy(false)
+    if (err) setError(err.message)
+    else setResetSent(true)
   }
 
   return (
@@ -39,6 +53,7 @@ export default function Login() {
         <p className="sub">RPMS-PPST evaluation &amp; PMCF coaching, in one place</p>
 
         {error && <div className="auth-error">{error}</div>}
+        {resetSent && <p className="muted" style={{ textAlign: 'center', marginBottom: 12 }}>Reset link sent to {email} — check that inbox.</p>}
 
         <form onSubmit={handleSubmit}>
           {mode === 'signup' && (
@@ -59,6 +74,12 @@ export default function Login() {
             {busy ? 'Please wait…' : mode === 'signin' ? 'Sign in' : 'Create account'}
           </button>
         </form>
+
+        {mode === 'signin' && (
+          <p className="muted" style={{ textAlign: 'center', marginTop: 10 }}>
+            <a onClick={handleForgotPassword} style={{ cursor: 'pointer' }}>Forgot password?</a>
+          </p>
+        )}
 
         <p className="muted" style={{ textAlign: 'center', marginTop: 16 }}>
           {mode === 'signin' ? (

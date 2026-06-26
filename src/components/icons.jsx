@@ -56,3 +56,8 @@ export const IconSliders = () => (
     <circle cx="14" cy="6" r="2" /><circle cx="6" cy="12" r="2" /><circle cx="16" cy="18" r="2" />
   </svg>
 )
+export const IconKey = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="8" cy="15" r="4" /><path d="M11 12 19 4M16 5l2 2M19 8l2 2" />
+  </svg>
+)

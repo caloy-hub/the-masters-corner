@@ -25,6 +25,12 @@ conversations.
    This adds Teams ("circles") and the approving-official override fields.
 5. Then paste the contents of `supabase/migration_04_archive_and_timestamps.sql` → Run.
    This adds archiving and submitted-at timestamps to reports.
+6. Then paste the contents of `supabase/migration_05_email_for_password_reset.sql` → Run.
+   This stores each user's email on their profile, needed for password resets.
+7. In **Authentication → URL Configuration**, add your deployed URL's
+   `/reset-password` path to **Redirect URLs** (e.g.
+   `https://your-site.netlify.app/reset-password`) — otherwise the
+   password-reset email link won't be allowed to redirect back into the app.
 4. Go to **Project Settings → API** and copy your **Project URL** and
    **anon public key**.
 5. The first real admin: sign up normally through the app (everyone starts
@@ -69,6 +75,14 @@ npm run dev
   PPST domains and indicators directly in the app. The RPMS-PPST form reads
   this table live, so changes show up immediately with no redeploy. Kept
   admin-only since the indicator list is shared school-wide, not per-team.
+- **My Account** (`/account`, all roles) — anyone can change their own
+  password here at any time, no admin involved.
+- **Password reset (admin)** — on the Manage Users page, admins get a
+  **Reset password** button next to each person. It emails that person a
+  secure reset link (via Supabase's built-in reset flow) — admins never see
+  or set the actual password directly, which keeps things secure without
+  needing a backend server. The "Forgot password?" link on the login screen
+  does the same thing for anyone who can't log in themselves.
 - **Reports** now also shows a **Submitted** timestamp for every record, and
   lets you **Archive** (hide from the active view without deleting) or
   **Delete** (permanently remove) any RPMS evaluation or PMCF record. An

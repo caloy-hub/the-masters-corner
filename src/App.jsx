@@ -11,6 +11,8 @@ import Reports from './pages/Reports.jsx'
 import MyResults from './pages/MyResults.jsx'
 import Users from './pages/Users.jsx'
 import ManageIndicators from './pages/ManageIndicators.jsx'
+import Account from './pages/Account.jsx'
+import ResetPassword from './pages/ResetPassword.jsx'
 import Schedule from './pages/Schedule.jsx'
 import PrintRPMS from './pages/PrintRPMS.jsx'
 import PrintPMCF from './pages/PrintPMCF.jsx'
@@ -42,6 +44,8 @@ export default function App() {
 
       <Route path="/users" element={<ProtectedRoute allow={['admin']}><Users /></ProtectedRoute>} />
       <Route path="/indicators" element={<ProtectedRoute allow={['admin']}><ManageIndicators /></ProtectedRoute>} />
+      <Route path="/account" element={<ProtectedRoute allow={['admin', 'master_teacher', 'teacher']}><Account /></ProtectedRoute>} />
+      <Route path="/reset-password" element={<ResetPassword />} />
 
       {/* Print views render full-bleed, outside the sidebar shell */}
       <Route path="/print/rpms/:id" element={<PrintRPMS />} />

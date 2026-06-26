@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
-import { IconGrid, IconClipboard, IconCompass, IconCheckCircle, IconChart, IconUserStar, IconUsers, IconCalendar, IconSliders } from './icons.jsx'
+import { IconGrid, IconClipboard, IconCompass, IconCheckCircle, IconChart, IconUserStar, IconUsers, IconCalendar, IconSliders, IconKey } from './icons.jsx'
 
 const NAV = [
   { to: '/', label: 'Dashboard', icon: IconGrid, roles: ['admin', 'master_teacher', 'teacher'] },
@@ -12,6 +12,7 @@ const NAV = [
   { to: '/my-results', label: 'My Results', icon: IconUserStar, roles: ['teacher'] },
   { to: '/indicators', label: 'Manage Indicators', icon: IconSliders, roles: ['admin'] },
   { to: '/users', label: 'Manage Users', icon: IconUsers, roles: ['admin'] },
+  { to: '/account', label: 'My Account', icon: IconKey, roles: ['admin', 'master_teacher', 'teacher'] },
 ]
 
 const ROLE_LABEL = { admin: 'Admin', master_teacher: 'Master Teacher', teacher: 'Teacher' }
