@@ -69,6 +69,7 @@ export default function RPMSForm() {
         status,
         overall_rating: avg ? Number(avg.toFixed(2)) : null,
         overall_descriptor: overallDescriptor(avg),
+        submitted_at: status === 'submitted' ? new Date().toISOString() : null,
       })
       .select()
       .single()

@@ -40,6 +40,7 @@ export default function PMCFForm() {
       agreed_timeline: form.agreed_timeline || null,
       master_teacher_id: profile.id,
       status,
+      submitted_at: status === 'submitted' ? new Date().toISOString() : null,
     })
     setSaving(false)
     if (error) setMessage(error.message)

@@ -23,6 +23,8 @@ conversations.
    This adds the conference/observation scheduling table.
 4. Then paste the contents of `supabase/migration_03_teams_and_overrides.sql` → Run.
    This adds Teams ("circles") and the approving-official override fields.
+5. Then paste the contents of `supabase/migration_04_archive_and_timestamps.sql` → Run.
+   This adds archiving and submitted-at timestamps to reports.
 4. Go to **Project Settings → API** and copy your **Project URL** and
    **anon public key**.
 5. The first real admin: sign up normally through the app (everyone starts
@@ -63,8 +65,14 @@ npm run dev
   to the teacher.
 - **Teacher** can only see their own results on `/my-results` after that
   release happens — nothing is visible before approval.
-- **Reports** (`/reports`) gives admins/master teachers a school-wide view
-  across teachers and rating periods.
+- **Manage Indicators** (`/indicators`, admin-only) — add, edit, or delete
+  PPST domains and indicators directly in the app. The RPMS-PPST form reads
+  this table live, so changes show up immediately with no redeploy. Kept
+  admin-only since the indicator list is shared school-wide, not per-team.
+- **Reports** now also shows a **Submitted** timestamp for every record, and
+  lets you **Archive** (hide from the active view without deleting) or
+  **Delete** (permanently remove) any RPMS evaluation or PMCF record. An
+  **Active / Archived** toggle switches between the two views.
 - **Schedule** (`/schedule`) lets admins/master teachers set up classroom
   observations and PMCF coaching conferences, with a date, time, duration,
   and location. Teachers can also request a slot themselves — it starts as

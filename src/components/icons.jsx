@@ -50,3 +50,9 @@ export const IconPrinter = () => (
     <path d="M7 17h10v4H7z" /><path d="M7.5 12.5h1" />
   </svg>
 )
+export const IconSliders = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 6h10M17 6h3M4 12h3M9 12h11M4 18h13M20 18h0" />
+    <circle cx="14" cy="6" r="2" /><circle cx="6" cy="12" r="2" /><circle cx="16" cy="18" r="2" />
+  </svg>
+)
