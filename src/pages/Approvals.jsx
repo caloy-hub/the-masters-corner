@@ -2,11 +2,23 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase.js'
 import { useAuth } from '../context/AuthContext.jsx'
 
+const STORAGE_KEY = 'mc_approving_official'
+
 export default function Approvals() {
   const { profile } = useAuth()
   const [evaluations, setEvaluations] = useState([])
   const [pmcf, setPmcf] = useState([])
   const [loading, setLoading] = useState(true)
+
+  const saved = (() => {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) } catch { return null }
+  })()
+  const [officialName, setOfficialName] = useState(saved?.name || '')
+  const [officialTitle, setOfficialTitle] = useState(saved?.title || 'Principal')
+
+  function rememberOfficial(name, title) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ name, title })) } catch { /* ignore */ }
+  }
 
   async function load() {
     setLoading(true)
@@ -28,18 +40,26 @@ export default function Approvals() {
   useEffect(() => { load() }, [])
 
   async function approveEval(id, release) {
+    rememberOfficial(officialName, officialTitle)
     await supabase.from('rpms_evaluations').update({
       status: 'approved',
       approved_by: profile.id,
       approved_at: new Date().toISOString(),
       released_to_teacher: release,
+      approving_official_name: officialName || null,
+      approving_official_title: officialTitle || null,
     }).eq('id', id)
     load()
   }
 
   async function approvePmcf(id) {
+    rememberOfficial(officialName, officialTitle)
     await supabase.from('pmcf_records').update({
-      status: 'approved', approved_by: profile.id, approved_at: new Date().toISOString(),
+      status: 'approved',
+      approved_by: profile.id,
+      approved_at: new Date().toISOString(),
+      approving_official_name: officialName || null,
+      approving_official_title: officialTitle || null,
     }).eq('id', id)
     load()
   }
@@ -52,6 +72,24 @@ export default function Approvals() {
         <div className="eyebrow">Validation</div>
         <h2>Approvals</h2>
         <p>Review submitted evaluations and coaching plans. Approving an evaluation can also release it to the teacher.</p>
+      </div>
+
+      <div className="card">
+        <div className="section-title">Approving official (shown on printed results)</div>
+        <p className="muted" style={{ marginTop: -4, marginBottom: 14 }}>
+          This is the name and title that prints as "Approved by" — it doesn't have to match whoever is logged in.
+          It's remembered on this device for next time.
+        </p>
+        <div className="field-row" style={{ maxWidth: 480 }}>
+          <div className="field">
+            <label>Full name</label>
+            <input value={officialName} onChange={(e) => setOfficialName(e.target.value)} placeholder="e.g. Lyndon M. Dumael" />
+          </div>
+          <div className="field">
+            <label>Title</label>
+            <input value={officialTitle} onChange={(e) => setOfficialTitle(e.target.value)} placeholder="e.g. Principal" />
+          </div>
+        </div>
       </div>
 
       <div className="card">

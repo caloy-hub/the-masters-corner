@@ -21,6 +21,8 @@ conversations.
    row-level security policies, and a private `evidence` storage bucket.
 3. Then paste the contents of `supabase/migration_02_appointments.sql` → Run.
    This adds the conference/observation scheduling table.
+4. Then paste the contents of `supabase/migration_03_teams_and_overrides.sql` → Run.
+   This adds Teams ("circles") and the approving-official override fields.
 4. Go to **Project Settings → API** and copy your **Project URL** and
    **anon public key**.
 5. The first real admin: sign up normally through the app (everyone starts
@@ -77,7 +79,18 @@ npm run dev
   blank signature lines for Teacher / Rated by / Approved by. Use your
   browser's print dialog (Ctrl/Cmd+P) or the on-page "Print this result"
   button to save as PDF or send to a printer.
-- **Users** (`/users`, admin-only) manages roles and active status.
+- **Users** (`/users`, admin-only) manages roles, active status, and **Teams**
+  — create a team per master teacher (e.g. "Team Mabini") and assign that
+  master teacher plus their teachers to it. A master teacher then only sees
+  and approves work for their own team; admins still see and can approve
+  everything, across every team. (This is also why a principal should
+  generally be set up as `admin` rather than `master_teacher` — they need the
+  school-wide view.)
+- **Approving official override** — on the Approvals page, master teachers
+  set a "Full name" and "Title" (e.g. "Lyndon M. Dumael" / "Principal") that
+  prints as the Approved By signature line, independent of who is actually
+  logged in approving it. It's remembered on that device for next time, and
+  can be changed any time before clicking Approve.
 
 ## What you'll likely want to customize next
 

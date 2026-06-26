@@ -104,7 +104,7 @@ export default function PrintRPMS() {
           </div>
           <div>
             <div className="sig-line" />
-            <div className="sig-label">{e.approver?.full_name || '—'}<br />Approved by</div>
+            <div className="sig-label">{e.approving_official_name || e.approver?.full_name || '—'}<br />{e.approving_official_title || 'Approved by'}</div>
           </div>
         </div>
       </div>

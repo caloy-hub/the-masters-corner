@@ -98,7 +98,7 @@ export default function PrintPMCF() {
           </div>
           <div>
             <div className="sig-line" />
-            <div className="sig-label">{r.approver?.full_name || '—'}<br />Approved by</div>
+            <div className="sig-label">{r.approving_official_name || r.approver?.full_name || '—'}<br />{r.approving_official_title || 'Approved by'}</div>
           </div>
         </div>
       </div>
