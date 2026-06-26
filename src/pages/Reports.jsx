@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase.js'
 
 export default function Reports() {
@@ -41,7 +42,7 @@ export default function Reports() {
           <p className="empty-state">No evaluations recorded yet.</p>
         ) : (
           <table>
-            <thead><tr><th>Teacher</th><th>Evaluator</th><th>Period</th><th>Rating</th><th>Descriptor</th><th>Status</th></tr></thead>
+            <thead><tr><th>Teacher</th><th>Evaluator</th><th>Period</th><th>Rating</th><th>Descriptor</th><th>Status</th><th></th></tr></thead>
             <tbody>
               {rows.map((r) => (
                 <tr key={r.id}>
@@ -51,6 +52,11 @@ export default function Reports() {
                   <td>{r.overall_rating ?? '—'}</td>
                   <td>{r.overall_descriptor ?? '—'}</td>
                   <td><span className={`status-pill status-${r.status}`}>{r.status}</span></td>
+                  <td>
+                    {(r.status === 'approved' || r.status === 'released') && (
+                      <Link className="btn btn-ghost" to={`/print/rpms/${r.id}`} target="_blank">Print</Link>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>

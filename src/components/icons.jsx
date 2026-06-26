@@ -38,3 +38,15 @@ export const IconUsers = () => (
     <circle cx="17" cy="9" r="2.3" /><path d="M15.2 14.6c2.6.2 4.7 1.7 4.7 4.4" />
   </svg>
 )
+export const IconCalendar = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3.5" y="5" width="17" height="16" rx="2" /><path d="M8 3v4M16 3v4M3.5 10h17" />
+    <path d="M8 14h.01M12 14h.01M16 14h.01M8 17.5h.01M12 17.5h.01" />
+  </svg>
+)
+export const IconPrinter = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6 9V3h12v6" /><rect x="4" y="9" width="16" height="8" rx="1.5" />
+    <path d="M7 17h10v4H7z" /><path d="M7.5 12.5h1" />
+  </svg>
+)

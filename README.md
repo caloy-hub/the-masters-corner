@@ -19,13 +19,15 @@ conversations.
 2. Open **SQL Editor** → paste the contents of `supabase/schema.sql` → Run.
    This creates all tables, the 7 PPST domains, a starter set of indicators,
    row-level security policies, and a private `evidence` storage bucket.
-3. Go to **Project Settings → API** and copy your **Project URL** and
+3. Then paste the contents of `supabase/migration_02_appointments.sql` → Run.
+   This adds the conference/observation scheduling table.
+4. Go to **Project Settings → API** and copy your **Project URL** and
    **anon public key**.
-4. The first real admin: sign up normally through the app (everyone starts
+5. The first real admin: sign up normally through the app (everyone starts
    as `teacher` by default), then in Supabase **Table Editor → profiles**,
    change that row's `role` to `admin`. Do the same to promote master
    teachers (`master_teacher`).
-5. (Optional) Add the remaining ~26 PPST indicators in **Table Editor →
+6. (Optional) Add the remaining ~26 PPST indicators in **Table Editor →
    ppst_indicators** to match your full official RPMS Tool — a starter set
    covering all 7 domains is already seeded so the app works immediately.
 
@@ -61,6 +63,20 @@ npm run dev
   release happens — nothing is visible before approval.
 - **Reports** (`/reports`) gives admins/master teachers a school-wide view
   across teachers and rating periods.
+- **Schedule** (`/schedule`) lets admins/master teachers set up classroom
+  observations and PMCF coaching conferences, with a date, time, duration,
+  and location. Teachers can also request a slot themselves — it starts as
+  *proposed* until an admin/master teacher confirms it. Either side can
+  cancel a still-pending request; staff can mark a confirmed appointment
+  *completed* once it happens.
+- **Print** — once an RPMS-PPST evaluation or PMCF coaching record is
+  approved (and, for RPMS, released), a **Print** button appears next to it
+  in My Results (teacher) and Reports (admin/master teacher). It opens a
+  clean, signature-ready printable version in a new tab — domain-by-domain
+  ratings and evidence for RPMS, or the full coaching plan for PMCF — with
+  blank signature lines for Teacher / Rated by / Approved by. Use your
+  browser's print dialog (Ctrl/Cmd+P) or the on-page "Print this result"
+  button to save as PDF or send to a printer.
 - **Users** (`/users`, admin-only) manages roles and active status.
 
 ## What you'll likely want to customize next

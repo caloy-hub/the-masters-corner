@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase.js'
 import { useAuth } from '../context/AuthContext.jsx'
 
@@ -41,13 +42,14 @@ export default function MyResults() {
             <div className="section-title">RPMS-PPST Evaluations</div>
             {evaluations.length === 0 ? <p className="empty-state">No results released yet.</p> : (
               <table>
-                <thead><tr><th>Period</th><th>Rating</th><th>Descriptor</th></tr></thead>
+                <thead><tr><th>Period</th><th>Rating</th><th>Descriptor</th><th></th></tr></thead>
                 <tbody>
                   {evaluations.map((e) => (
                     <tr key={e.id}>
                       <td>{e.rating_period}, {e.school_year}</td>
                       <td>{e.overall_rating}</td>
                       <td>{e.overall_descriptor}</td>
+                      <td><Link className="btn btn-ghost" to={`/print/rpms/${e.id}`} target="_blank">Print</Link></td>
                     </tr>
                   ))}
                 </tbody>
@@ -59,13 +61,14 @@ export default function MyResults() {
             <div className="section-title">Coaching Plans (PMCF)</div>
             {pmcf.length === 0 ? <p className="empty-state">No approved coaching plans yet.</p> : (
               <table>
-                <thead><tr><th>Focus area</th><th>Coaching plan</th><th>Follow-up</th></tr></thead>
+                <thead><tr><th>Focus area</th><th>Coaching plan</th><th>Follow-up</th><th></th></tr></thead>
                 <tbody>
                   {pmcf.map((p) => (
                     <tr key={p.id}>
                       <td>{p.indicator_text}</td>
                       <td>{p.coaching_action_plan}</td>
                       <td>{p.agreed_timeline || '—'}</td>
+                      <td><Link className="btn btn-ghost" to={`/print/pmcf/${p.id}`} target="_blank">Print</Link></td>
                     </tr>
                   ))}
                 </tbody>

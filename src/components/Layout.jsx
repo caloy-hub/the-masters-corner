@@ -1,9 +1,10 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
-import { IconGrid, IconClipboard, IconCompass, IconCheckCircle, IconChart, IconUserStar, IconUsers } from './icons.jsx'
+import { IconGrid, IconClipboard, IconCompass, IconCheckCircle, IconChart, IconUserStar, IconUsers, IconCalendar } from './icons.jsx'
 
 const NAV = [
   { to: '/', label: 'Dashboard', icon: IconGrid, roles: ['admin', 'master_teacher', 'teacher'] },
+  { to: '/schedule', label: 'Schedule', icon: IconCalendar, roles: ['admin', 'master_teacher', 'teacher'] },
   { to: '/rpms', label: 'RPMS-PPST Form', icon: IconClipboard, roles: ['admin', 'master_teacher'] },
   { to: '/pmcf', label: 'Coaching (PMCF)', icon: IconCompass, roles: ['admin', 'master_teacher'] },
   { to: '/approvals', label: 'Approvals', icon: IconCheckCircle, roles: ['admin', 'master_teacher'] },
