@@ -42,7 +42,13 @@ export default function Login() {
   return (
     <div className="auth-wrap">
       <div className="auth-card">
-        <div className="auth-seal">
+        <img
+          src="/logo.png"
+          alt="School logo"
+          className="auth-logo"
+          onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'flex' }}
+        />
+        <div className="auth-seal" style={{ display: 'none' }}>
           <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#1b1f3b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M4 19.5V5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v13" />
             <path d="M4 19.5A1.5 1.5 0 0 1 5.5 18H20" />
